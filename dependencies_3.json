@@ -1,0 +1,36 @@
+{
+  "packageA": {
+    "packageB": "1.0.0",
+    "packageC": "1.0.0",
+    "packageD": "1.0.0"
+  },
+  "packageB": {
+    "packageE": "1.0.0",
+    "packageF": "1.0.0"
+  },
+  "packageC": {
+    "packageG": "1.0.0",
+    "packageH": "1.0.0"
+  },
+  "packageD": {
+    "packageH": "1.0.0",
+    "packageI": "1.0.0"
+  },
+  "packageH": {
+    "packageJ": "1.0.0"
+  },
+  "packageE": {
+    "packageK": "1.0.0"
+  },
+  "packageF": {
+    "packageL": "1.0.0",
+    "packageM": "1.0.0"
+  },
+  "packageK": {
+    "packageA": "1.0.0"
+  },
+  "packageM": {
+    "packageN": "1.0.0",
+    "packageC": "1.0.0"
+  }
+}
