@@ -1,9 +1,9 @@
 import os
 import json
-import subprocess
 import sys
 from argparse import ArgumentParser
-
+import requests
+import subprocess
 
 def get_dependencies(package_name, max_depth, current_depth=0, seen=None):
     if seen is None:
@@ -15,14 +15,18 @@ def get_dependencies(package_name, max_depth, current_depth=0, seen=None):
     seen.add(package_name)
 
     try:
-        result = subprocess.run(
-            ["C:\\Users\\a0908\\AppData\Roaming\\npm\\npm.cmd", "view", package_name, "dependencies", "--json"],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        dependencies = json.loads(result.stdout) if result.stdout.strip() else {}
-    except subprocess.CalledProcessError as e:
+        response = requests.get(f'https://registry.npmjs.org/{package_name}')
+        response.raise_for_status()
+        data = response.json()
+        # Получаем информацию о последней версии пакета
+        version = data.get('dist-tags', {}).get('latest', '')
+        if not version:
+            print(f"Не удалось получить информацию о последней версии пакета {package_name}")
+            return {}
+        dependencies = data.get('versions', {}).get(version, {}).get('dependencies', {})
+        if dependencies is None:
+            dependencies = {}
+    except requests.RequestException as e:
         print(f"Ошибка при получении зависимостей для {package_name}: {e}", file=sys.stderr)
         return {}
 
